@@ -1,6 +1,6 @@
-package de.hsrt.mis.IdentityManagementAL.repo;
+package de.hsrt.mis.TeleKlinikAPI.repo;
 
-import de.hsrt.mis.IdentityManagementAL.model.UserEntity;
+import de.hsrt.mis.TeleKlinikAPI.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // In jpa, to connect to a db, we need to create a class which represents the table

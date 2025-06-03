@@ -1,13 +1,13 @@
-package de.hsrt.mis.IdentityManagementAL;
+package de.hsrt.mis.TeleKlinikAPI;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class IdentityManagementAlApplication {
+public class TeleKlinikAPIApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(IdentityManagementAlApplication.class, args);
+		SpringApplication.run(TeleKlinikAPIApplication.class, args);
 	}
 }
 

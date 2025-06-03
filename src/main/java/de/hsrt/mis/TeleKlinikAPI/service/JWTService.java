@@ -1,4 +1,4 @@
-package de.hsrt.mis.IdentityManagementAL.service;
+package de.hsrt.mis.TeleKlinikAPI.service;
 
 
 import io.jsonwebtoken.Claims;

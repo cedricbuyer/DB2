@@ -1,4 +1,4 @@
-package de.hsrt.mis.IdentityManagementAL;
+package de.hsrt.mis.TeleKlinikAPI;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

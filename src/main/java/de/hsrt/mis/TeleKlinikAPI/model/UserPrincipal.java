@@ -1,4 +1,4 @@
-package de.hsrt.mis.IdentityManagementAL.model;
+package de.hsrt.mis.TeleKlinikAPI.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

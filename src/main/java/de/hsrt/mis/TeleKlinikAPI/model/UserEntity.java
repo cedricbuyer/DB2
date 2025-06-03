@@ -1,4 +1,4 @@
-package de.hsrt.mis.IdentityManagementAL.model;
+package de.hsrt.mis.TeleKlinikAPI.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-/* We use Users instead of User as spring security has an embeeded class called User, so
+/* We use Users instead of User as spring security has an embedded class called User, so
  * sometimes can be mistakes when importing this class
  */
 @Entity
@@ -19,19 +19,33 @@ public class UserEntity {
 
     @Getter
     @Setter
-    private String username;
+    private String name;
+
+    @Getter
+    @Setter
+    private String lastname;
 
     @Getter
     @Setter
     private String password;
 
+    @Getter
+    @Setter
+    private String gender; // FIXME: Enum Type
+
+    @Getter
+    @Setter
+    private Date birthdate;
+
     @Override
     public String toString() {
         return String.format(
-                "UserEntity{id=%d, username='%s', password='%s'}",
+                "UserEntity{id=%d, name='%s', lastname='%s', password='%s', gender='%s', birthdate='%s'}",
                 id,
-                username,
-                password
+                name,
+                password,
+                gender,
+                birthdate // FIXME: String conversion
         );
     }
 }

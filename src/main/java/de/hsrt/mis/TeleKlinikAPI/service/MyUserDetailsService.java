@@ -1,9 +1,9 @@
-package de.hsrt.mis.IdentityManagementAL.service;
+package de.hsrt.mis.TeleKlinikAPI.service;
 
 
-import de.hsrt.mis.IdentityManagementAL.model.UserPrincipal;
-import de.hsrt.mis.IdentityManagementAL.model.UserEntity;
-import de.hsrt.mis.IdentityManagementAL.repo.UserRepo;
+import de.hsrt.mis.TeleKlinikAPI.model.UserPrincipal;
+import de.hsrt.mis.TeleKlinikAPI.model.UserEntity;
+import de.hsrt.mis.TeleKlinikAPI.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

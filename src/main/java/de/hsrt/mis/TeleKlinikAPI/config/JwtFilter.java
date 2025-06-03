@@ -1,7 +1,7 @@
-package de.hsrt.mis.IdentityManagementAL.config;
+package de.hsrt.mis.TeleKlinikAPI.config;
 
-import de.hsrt.mis.IdentityManagementAL.service.JWTService;
-import de.hsrt.mis.IdentityManagementAL.service.MyUserDetailsService;
+import de.hsrt.mis.TeleKlinikAPI.service.JWTService;
+import de.hsrt.mis.TeleKlinikAPI.service.MyUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

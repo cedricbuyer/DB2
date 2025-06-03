@@ -1,7 +1,7 @@
-package de.hsrt.mis.IdentityManagementAL.controller;
+package de.hsrt.mis.TeleKlinikAPI.controller;
 
-import de.hsrt.mis.IdentityManagementAL.model.UserEntity;
-import de.hsrt.mis.IdentityManagementAL.service.UserService;
+import de.hsrt.mis.TeleKlinikAPI.model.UserEntity;
+import de.hsrt.mis.TeleKlinikAPI.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
