@@ -1,6 +1,7 @@
 package de.hsrt.db2.TeleKlinikDB.service;
 
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.GP;
 import de.hsrt.db2.TeleKlinikDB.model.Patient;
@@ -29,7 +30,7 @@ public class TeleKlinikDBService {
         );
     }
 
-    public void processTeleKlinikCommand(TeleKlinikCommand command) {
-        command.execute(getTeleKlinikContext());
+    public TeleKlinikCommandResult processTeleKlinikCommand(TeleKlinikCommand command) {
+        return command.execute(getTeleKlinikContext());
     }
 }

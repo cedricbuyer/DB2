@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
 import lombok.Getter;
@@ -12,7 +13,7 @@ public record DeleteChat (
         @Getter UUID chatID
 ) implements ChatCommand {
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         // Get Chat to delete
         Optional<Chat> chat = ctx.getChatRepo().findById(chatID);
 
@@ -21,5 +22,7 @@ public record DeleteChat (
         }
 
         ctx.getChatRepo().delete(chat.get());
+
+        return TeleKlinikCommandResult.emptyResult();
     }
 }

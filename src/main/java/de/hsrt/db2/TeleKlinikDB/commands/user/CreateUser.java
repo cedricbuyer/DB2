@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.enums.UserType;
 import de.hsrt.db2.TeleKlinikDB.model.GP;
@@ -21,7 +22,7 @@ public record CreateUser (
         @Getter @Nullable String insurance
 ) implements UserCommand {
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         User user = switch (userType) {
             case GP -> new GP();
             case PATIENT -> new Patient();
@@ -33,14 +34,17 @@ public record CreateUser (
         user.setBirthdate(birthdate);
 
 
-        switch (userType) {
+        return switch (userType) {
             case GP -> {
                 if (profession == null || profession.isEmpty()) {
                     throw new IllegalArgumentException("Profession must be set for UserType.GP");
                 }
 
                 ((GP) user).setProfession(profession);
-                ctx.getGpUserRepo().save((GP) user);
+
+                yield new TeleKlinikCommandResult(
+                        Optional.of(ctx.getGpUserRepo().save((GP) user).getId())
+                );
             }
             case PATIENT -> {
                 if (insurance == null || insurance.isEmpty()) {
@@ -48,8 +52,11 @@ public record CreateUser (
                 }
 
                 ((Patient) user).setInsurance(insurance);
-                ctx.getPatientUserRepo().save((Patient) user);
+
+                yield new TeleKlinikCommandResult(
+                        Optional.of(ctx.getPatientUserRepo().save((Patient) user).getId())
+                );
             }
-        }
+        };
     }
 }

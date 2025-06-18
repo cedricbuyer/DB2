@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
@@ -27,7 +28,7 @@ public record SendMsg (
     }
 
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Chat> chat = ctx.getChatRepo().findById(chatID);
         if (chat.isEmpty()) {
             throw new NoSuchElementException("Chat with ID " + chatID + " not found!");
@@ -50,6 +51,7 @@ public record SendMsg (
         msg.setChat(chat.get());
         msg.setAttachment(attachment);
         msg.setDate((Date) Date.from(Instant.now()));
-        ctx.getMessageRepo().save(msg);
+
+        return new TeleKlinikCommandResult(Optional.of(ctx.getMessageRepo().save(msg).getId()));
     }
 }

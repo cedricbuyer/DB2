@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
 import de.hsrt.db2.TeleKlinikDB.enums.ChatState;
@@ -14,7 +15,7 @@ public record UpdateChat (
         @Getter ChatState chatState
 ) implements ChatCommand {
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Chat> chatOptional = ctx.getChatRepo().findById(chatID);
 
         if (chatOptional.isEmpty()) {
@@ -26,5 +27,7 @@ public record UpdateChat (
         // FIXME: Does this work?
         chat.setChatState(chatState);
         ctx.getChatRepo().save(chat);
+
+        return TeleKlinikCommandResult.emptyResult();
     }
 }

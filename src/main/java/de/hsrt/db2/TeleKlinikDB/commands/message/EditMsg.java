@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public record EditMsg (
     }
 
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Message> msgOptional = ctx.getMessageRepo().findById(messageID);
 
         if (msgOptional.isEmpty()) {
@@ -34,5 +35,7 @@ public record EditMsg (
 
         msg.setText(text);
         ctx.getMessageRepo().save(msg);
+
+        return TeleKlinikCommandResult.emptyResult();
     }
 }

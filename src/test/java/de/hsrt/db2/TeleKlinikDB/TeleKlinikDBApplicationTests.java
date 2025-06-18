@@ -1,6 +1,7 @@
 package de.hsrt.db2.TeleKlinikDB;
 
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.user.CreateUser;
 import de.hsrt.db2.TeleKlinikDB.enums.UserType;
 import de.hsrt.db2.TeleKlinikDB.service.TeleKlinikDBService;
@@ -10,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @SpringBootTest
 class TeleKlinikDBApplicationTests {
@@ -29,6 +29,8 @@ class TeleKlinikDBApplicationTests {
 				null
 		);
 
-		consultService.processTeleKlinikCommand(cmd);
+		TeleKlinikCommandResult result = consultService.processTeleKlinikCommand(cmd);
+
+		System.out.println(result);
 	}
 }
