@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import java.sql.Date;
 
-/* We use Users instead of User as spring security has an embedded class called User, so
- * sometimes can be mistakes when importing this class
- */
+import static jakarta.persistence.InheritanceType.JOINED;
+
 @Entity
+@Inheritance(strategy=JOINED)
 public class UserEntity {
     @Id
     @Getter
