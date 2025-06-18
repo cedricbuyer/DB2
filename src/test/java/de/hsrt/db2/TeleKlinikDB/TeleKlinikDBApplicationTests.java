@@ -30,7 +30,7 @@ class TeleKlinikDBApplicationTests {
 
 	@Test
 	void createInvalidUserTest() {
-		TeleklinikCommand cmd = new CreateUser(
+		TeleKlinikCommand cmd = new CreateUser(
 				"", // Invalid first name
 				"Mustermann",
 				"ABCDE",
@@ -38,11 +38,8 @@ class TeleKlinikDBApplicationTests {
 				new Date(1999, 01, 01)
 		);
 
-		try {
-			consultService.processTeleKlinikCommand(cmd);
-		} catch (Exception e) {
-			System.out.println("Expected exception for invalid user creation: " + e.getMessage());
-		}
+		// consultService.processTeleKlinikCommand(cmd);
+		assertThrows(Exception.class, () -> consultService.processTeleKlinikCommand(cmd));
 	}
 
 	@Test
@@ -54,11 +51,10 @@ class TeleKlinikDBApplicationTests {
 				"M",
 				new Date(Date.from(Instant.now().plusSeconds(60 * 60 * 24 * 365)).getTime()) // Some future date
 		);
-		try {
-			consultService.processTeleKlinikCommand(cmd);
-		} catch (Exception e) {
-			System.out.println("Expected exception for user with future birthdate: " + e.getMessage());
-		}
+
+		// consultService.processTeleKlinikCommand(cmd);
+		assertThrows(Exception.class, () -> consultService.processTeleKlinikCommand(cmd));
+
 	}
 
 	@Test
@@ -85,6 +81,17 @@ class TeleKlinikDBApplicationTests {
 		assertFalse(chats.isEmpty(), "Expected at least one chat for the patient");
 		assertEquals(1, chats.size(), "Expected exactly one chat for the patient");
 		assertTrue(chats.contains(chat1), "Expected chat1 to be in the list of chats for the patient");
+	}
 
+	@Test
+	void sendMsgRequiresContent() {
+		assertThrows(IllegalArgumentException.class, () ->
+				new SendMsg(UUID.randomUUID(), "", null, UUID.randomUUID()));
+	}
+
+	@Test
+	void editMsgRequiresText() {
+		assertThrows(IllegalArgumentException.class, () ->
+				new EditMsg(UUID.randomUUID(), null));
 	}
 }
