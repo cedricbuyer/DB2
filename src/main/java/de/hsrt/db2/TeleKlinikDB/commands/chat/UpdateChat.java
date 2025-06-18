@@ -26,7 +26,6 @@ public class UpdateChat implements ChatCommand {
 
     @Override
     public void execute(ChatRepo chatRepo, UserRepo<GP> gpRepo, UserRepo<Patient> patientRepo) {
-        // Get Chat to delete
         Optional<Chat> chat = chatRepo.findById(this.chatID);
 
         if (chat.isEmpty()) {

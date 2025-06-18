@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Blob;
 import java.sql.Date;
 
 import static jakarta.persistence.CascadeType.REMOVE;
@@ -16,10 +17,12 @@ public class Message {
     private int UUID;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false, cascade = REMOVE)
     private User sender;
 
     @Getter
+    @Setter
     @ManyToOne(optional = false, cascade = REMOVE)
     private Chat chat;
 
@@ -34,5 +37,5 @@ public class Message {
     @Getter
     @Setter
     @Lob
-    private byte[] attachment;
+    private Blob attachment;
 }
