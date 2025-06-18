@@ -28,6 +28,6 @@ public class Chat {
 
     @Getter
     @Setter
-    @Embedded
+    @Enumarated(EnumType.STRING)
     private ChatState chatState;
 }

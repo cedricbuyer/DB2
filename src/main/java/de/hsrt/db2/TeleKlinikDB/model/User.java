@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.model;
 
+import de.hsrt.db2.TeleKlinikDB.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,8 @@ public class User {
 
     @Getter
     @Setter
-    private String gender; // FIXME: Enum Type
+    @Enumerated(EnumType.STRING)
+    private Gender gender; // FIXME: Enum Type
 
     @Getter
     @Setter

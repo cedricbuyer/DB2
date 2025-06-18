@@ -1,8 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.enums;
 
-import jakarta.persistence.Embeddable;
-
-@Embeddable
+// Enum seems much better for this. As well as for the Gender
 public enum ChatState {
     ACTIVE,
     ARCHIVED
