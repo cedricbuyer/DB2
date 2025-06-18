@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class  GP extends UserEntity {
+public class GP extends UserEntity {
     @Getter
     @Setter
     private String profession;
