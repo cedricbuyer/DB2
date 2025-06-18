@@ -1,10 +1,10 @@
-package de.hsrt.mis.TeleKlinikAPI;
+package de.hsrt.db2.TeleKlinikDB;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class IdentityManagementAlApplicationTests {
+class TeleKlinikDBApplicationTests {
 
 	@Test
 	void contextLoads() {

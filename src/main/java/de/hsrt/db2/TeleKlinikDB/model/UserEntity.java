@@ -1,11 +1,9 @@
-package de.hsrt.mis.TeleKlinikAPI.model;
+package de.hsrt.db2.TeleKlinikDB.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.sql.Date;
 
 /* We use Users instead of User as spring security has an embedded class called User, so
  * sometimes can be mistakes when importing this class
