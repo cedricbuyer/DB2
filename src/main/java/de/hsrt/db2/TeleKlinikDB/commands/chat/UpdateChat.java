@@ -1,39 +1,30 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
 import de.hsrt.db2.TeleKlinikDB.model.ChatState;
-import de.hsrt.db2.TeleKlinikDB.model.GP;
-import de.hsrt.db2.TeleKlinikDB.model.Patient;
-import de.hsrt.db2.TeleKlinikDB.repo.ChatRepo;
-import de.hsrt.db2.TeleKlinikDB.repo.UserRepo;
 import lombok.Getter;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-public class UpdateChat implements ChatCommand {
-    @Getter
-    private final UUID chatID;
-
-    @Getter
-    private final ChatState chatState;
-
-    public UpdateChat(UUID chatID, ChatState chatState) {
-        this.chatID = chatID;
-        this.chatState = chatState;
-    }
-
+public record UpdateChat (
+        @Getter UUID chatID,
+        @Getter ChatState chatState
+) implements ChatCommand {
     @Override
-    public void execute(ChatRepo chatRepo, UserRepo<GP> gpRepo, UserRepo<Patient> patientRepo) {
-        Optional<Chat> chat = chatRepo.findById(this.chatID);
+    public void execute(TeleKlinikContext ctx) {
+        Optional<Chat> chatOptional = ctx.getChatRepo().findById(chatID);
 
-        if (chat.isEmpty()) {
-            throw new NoSuchElementException("Chat with ID " + this.chatID + " not found!");
+        if (chatOptional.isEmpty()) {
+            throw new NoSuchElementException("Chat with ID " + chatID + " not found!");
         }
 
+        Chat chat = chatOptional.get();
+
         // FIXME: Does this work?
-        chat.get().setChatState(chatState);
-        chatRepo.save(chat.get());
+        chat.setChatState(chatState);
+        ctx.getChatRepo().save(chat);
     }
 }

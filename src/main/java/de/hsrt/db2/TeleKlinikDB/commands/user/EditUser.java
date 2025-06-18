@@ -1,30 +1,46 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
+import de.hsrt.db2.TeleKlinikDB.model.User;
 import lombok.Getter;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
-public class EditUser extends UserCommand {
-    @Getter
-    private final UUID userID;
+public record EditUser (
+    @Getter UUID userID,
+    @Getter String name,
+    @Getter String lastname,
+    @Getter String password,
+    @Getter String gender
+) implements UserCommand {
+    @Override
+    public void execute(TeleKlinikContext ctx) {
+        Optional<User> userOptional = ctx.getUserRepo().findById(userID);
 
-    @Getter
-    private final String name;
+        if (userOptional.isEmpty()) {
+            throw new NoSuchElementException("User with ID " + userID + " not found!");
+        }
 
-    @Getter
-    private final String lastname;
+        User user = userOptional.get();
 
-    @Getter
-    private final String password;
+        if (name != null && !name.isEmpty()) {
+            user.setName(name);
+        }
 
-    @Getter
-    private final String gender;
+        if (lastname != null && !lastname.isEmpty()) {
+            user.setLastname(lastname);
+        }
 
-    public EditUser(UUID userID, String name, String lastname, String password, String gender) {
-        this.userID = userID;
-        this.name = name;
-        this.lastname = lastname;
-        this.password = password;
-        this.gender = gender;
+        if (password != null && !password.isEmpty()) {
+            user.setPassword(password);
+        }
+
+        if (gender != null && !gender.isEmpty()) {
+            user.setGender(gender);
+        }
+
+        ctx.getUserRepo().save(user);
     }
 }

@@ -33,6 +33,7 @@ public class User {
     private String gender; // FIXME: Enum Type
 
     @Getter
+    @Setter
     private Date birthdate;
 
     @Override

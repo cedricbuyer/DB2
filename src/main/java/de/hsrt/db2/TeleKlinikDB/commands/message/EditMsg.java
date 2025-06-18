@@ -1,45 +1,38 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
-import de.hsrt.db2.TeleKlinikDB.model.Chat;
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
-import de.hsrt.db2.TeleKlinikDB.model.User;
-import de.hsrt.db2.TeleKlinikDB.repo.ChatRepo;
-import de.hsrt.db2.TeleKlinikDB.repo.MessageRepo;
-import de.hsrt.db2.TeleKlinikDB.repo.UserRepo;
 import lombok.Getter;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-public class EditMsg implements MsgCommand {
-    @Getter
-    private final UUID messageID;
+public record EditMsg (
+        @Getter UUID messageID,
+        @Getter String text
+) implements MsgCommand {
+    public EditMsg {
+        if (text == null || text.isEmpty()) {
+            throw new IllegalArgumentException("Text cannot be null or empty!");
+        }
+    }
 
-    @Getter
-    private final String text;
+    @Override
+    public void execute(TeleKlinikContext ctx) {
+        Optional<Message> msgOptional = ctx.getMessageRepo().findById(messageID);
 
-    public EditMsg(UUID messageID, String text) {
-        this.messageID = messageID;
+        if (msgOptional.isEmpty()) {
+            throw new NoSuchElementException("Message with ID " + messageID + " not found!");
+        }
 
         if (text == null || text.isEmpty()) {
             throw new IllegalArgumentException("Text cannot be null or empty!");
         }
 
-        this.text = text;
-    }
+        Message msg = msgOptional.get();
 
-    public void execute(ChatRepo chatRepo, UserRepo<User> userRepo, MessageRepo messageRepo) {
-        Optional<Message> msg = messageRepo.findById(this.messageID);
-        if (msg.isEmpty()) {
-            throw new NoSuchElementException("Message with ID " + this.messageID + " not found!");
-        }
-
-        if (this.text == null || this.text.isEmpty()) {
-            throw new IllegalArgumentException("Text cannot be null or empty!");
-        }
-
-        msg.get().setText(this.text);
-        messageRepo.save(msg.get());
+        msg.setText(text);
+        ctx.getMessageRepo().save(msg);
     }
 }

@@ -1,3 +1,5 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
-public abstract class UserCommand { }
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
+
+public interface UserCommand extends TeleKlinikCommand { }

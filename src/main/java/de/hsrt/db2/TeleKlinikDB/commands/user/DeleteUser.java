@@ -1,14 +1,24 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
+import de.hsrt.db2.TeleKlinikDB.model.User;
 import lombok.Getter;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
-public class DeleteUser extends UserCommand {
-    @Getter
-    private final UUID userId;
+public record DeleteUser (
+        @Getter UUID userID
+) implements UserCommand {
+    @Override
+    public void execute(TeleKlinikContext ctx) {
+        Optional<User> user = ctx.getUserRepo().findById(userID);
 
-    public DeleteUser(UUID userId) {
-        this.userId = userId;
+        if (user.isEmpty()) {
+            throw new NoSuchElementException("User with ID " + userID + " not found!");
+        }
+
+        ctx.getUserRepo().delete(user.get());
     }
 }

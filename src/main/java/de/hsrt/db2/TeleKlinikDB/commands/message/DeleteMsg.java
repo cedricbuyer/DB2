@@ -1,30 +1,24 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
-import de.hsrt.db2.TeleKlinikDB.model.User;
-import de.hsrt.db2.TeleKlinikDB.repo.ChatRepo;
-import de.hsrt.db2.TeleKlinikDB.repo.MessageRepo;
-import de.hsrt.db2.TeleKlinikDB.repo.UserRepo;
 import lombok.Getter;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-public class DeleteMsg implements MsgCommand {
-    @Getter
-    private final UUID messageID;
+public record DeleteMsg (
+        @Getter UUID messageID
+) implements MsgCommand {
+    @Override
+    public void execute(TeleKlinikContext ctx) {
+        Optional<Message> msg = ctx.getMessageRepo().findById(messageID);
 
-    public DeleteMsg(UUID messageID) {
-        this.messageID = messageID;
-    }
-
-    public void execute(ChatRepo chatRepo, UserRepo<User> userRepo, MessageRepo messageRepo) {
-        Optional<Message> msg = messageRepo.findById(this.messageID);
         if (msg.isEmpty()) {
-            throw new NoSuchElementException("Message with ID " + this.messageID + " not found!");
+            throw new NoSuchElementException("Message with ID " + messageID + " not found!");
         }
 
-        messageRepo.delete(msg.get());
+        ctx.getMessageRepo().delete(msg.get());
     }
 }
