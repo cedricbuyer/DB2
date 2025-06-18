@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.model;
 
+import de.hsrt.db2.TeleKlinikDB.enums.ChatState;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

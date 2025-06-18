@@ -1,4 +1,4 @@
-package de.hsrt.db2.TeleKlinikDB.model;
+package de.hsrt.db2.TeleKlinikDB.enums;
 
 import jakarta.persistence.Embeddable;
 

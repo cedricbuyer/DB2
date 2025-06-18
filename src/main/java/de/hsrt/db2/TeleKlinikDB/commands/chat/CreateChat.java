@@ -1,6 +1,7 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
+import de.hsrt.db2.TeleKlinikDB.enums.ChatState;
 import de.hsrt.db2.TeleKlinikDB.model.*;
 import lombok.Getter;
 
