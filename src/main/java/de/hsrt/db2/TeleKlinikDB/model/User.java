@@ -39,12 +39,13 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "UserEntity{id=%d, name='%s', lastname='%s', password='%s', gender='%s', birthdate='%s'}",
+                "User{id=%s, name='%s', lastname='%s', password='%s', gender='%s', birthdate='%s'}",
                 id,
                 name,
+                lastname,
                 password,
                 gender,
-                birthdate // FIXME: String conversion
+                birthdate
         );
     }
 }
