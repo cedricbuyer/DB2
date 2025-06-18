@@ -13,7 +13,7 @@ import static jakarta.persistence.CascadeType.REMOVE;
 public class Chat {
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
 
     @Getter

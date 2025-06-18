@@ -13,7 +13,7 @@ import static jakarta.persistence.InheritanceType.JOINED;
 public class User {
     @Id
     @Getter
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private UUID id;
 
     @Getter
