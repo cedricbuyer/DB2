@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-public class Patient extends UserEntity {
+public class Patient extends User {
     @Getter
     @Setter
     private String insurance;

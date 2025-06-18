@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 import static jakarta.persistence.CascadeType.REMOVE;
 
 @Entity
@@ -11,7 +13,7 @@ public class Chat {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private UUID id;
 
     @Getter
     @Setter

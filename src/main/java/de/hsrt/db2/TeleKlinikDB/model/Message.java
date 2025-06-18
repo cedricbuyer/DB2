@@ -13,15 +13,13 @@ public class Message {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int UUID;
 
     @Getter
-    @Setter
     @ManyToOne(optional = false, cascade = REMOVE)
-    private UserEntity sender;
+    private User sender;
 
     @Getter
-    @Setter
     @ManyToOne(optional = false, cascade = REMOVE)
     private Chat chat;
 

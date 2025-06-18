@@ -4,16 +4,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.sql.Date;
+import java.util.UUID;
 
 import static jakarta.persistence.InheritanceType.JOINED;
 
 @Entity
 @Inheritance(strategy=JOINED)
-public class UserEntity {
+public class User {
     @Id
     @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private UUID id;
 
     @Getter
     @Setter
@@ -32,7 +33,6 @@ public class UserEntity {
     private String gender; // FIXME: Enum Type
 
     @Getter
-    @Setter
     private Date birthdate;
 
     @Override
