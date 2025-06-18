@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeleConsultService {
+public class TeleKlinikDBService {
     @Autowired MessageRepo messageRepo;
     @Autowired ChatRepo chatRepo;
     @Autowired UserRepo<User> userRepo;

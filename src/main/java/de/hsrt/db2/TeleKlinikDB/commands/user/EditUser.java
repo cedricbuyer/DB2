@@ -12,7 +12,6 @@ public record EditUser (
     @Getter UUID userID,
     @Getter String name,
     @Getter String lastname,
-    @Getter String password,
     @Getter String gender
 ) implements UserCommand {
     @Override
@@ -31,10 +30,6 @@ public record EditUser (
 
         if (lastname != null && !lastname.isEmpty()) {
             user.setLastname(lastname);
-        }
-
-        if (password != null && !password.isEmpty()) {
-            user.setPassword(password);
         }
 
         if (gender != null && !gender.isEmpty()) {

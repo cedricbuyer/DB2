@@ -26,10 +26,6 @@ public class User {
 
     @Getter
     @Setter
-    private String password;
-
-    @Getter
-    @Setter
     private String gender; // FIXME: Enum Type
 
     @Getter
@@ -39,11 +35,10 @@ public class User {
     @Override
     public String toString() {
         return String.format(
-                "User{id=%s, name='%s', lastname='%s', password='%s', gender='%s', birthdate='%s'}",
+                "User{id=%s, name='%s', lastname='%s', gender='%s', birthdate='%s'}",
                 id,
                 name,
                 lastname,
-                password,
                 gender,
                 birthdate
         );
