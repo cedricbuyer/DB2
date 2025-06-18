@@ -28,7 +28,7 @@ public class User {
     @Getter
     @Setter
     @Enumerated(EnumType.STRING)
-    private Gender gender; // FIXME: Enum Type
+    private Gender gender;
 
     @Getter
     @Setter
