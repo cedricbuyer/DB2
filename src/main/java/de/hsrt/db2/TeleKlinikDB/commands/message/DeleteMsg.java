@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
 import lombok.Getter;
@@ -12,7 +13,7 @@ public record DeleteMsg (
         @Getter UUID messageID
 ) implements MsgCommand {
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Message> msg = ctx.getMessageRepo().findById(messageID);
 
         if (msg.isEmpty()) {
@@ -20,5 +21,7 @@ public record DeleteMsg (
         }
 
         ctx.getMessageRepo().delete(msg.get());
+
+        return TeleKlinikCommandResult.emptyResult();
     }
 }

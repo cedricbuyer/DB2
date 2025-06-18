@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.User;
 import lombok.Getter;
@@ -12,11 +13,10 @@ public record EditUser (
     @Getter UUID userID,
     @Getter String name,
     @Getter String lastname,
-    @Getter String password,
     @Getter String gender
 ) implements UserCommand {
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<User> userOptional = ctx.getUserRepo().findById(userID);
 
         if (userOptional.isEmpty()) {
@@ -33,14 +33,12 @@ public record EditUser (
             user.setLastname(lastname);
         }
 
-        if (password != null && !password.isEmpty()) {
-            user.setPassword(password);
-        }
-
         if (gender != null && !gender.isEmpty()) {
             user.setGender(gender);
         }
 
         ctx.getUserRepo().save(user);
+
+        return TeleKlinikCommandResult.emptyResult();
     }
 }

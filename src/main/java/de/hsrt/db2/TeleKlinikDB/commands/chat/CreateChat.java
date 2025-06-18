@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.enums.ChatState;
 import de.hsrt.db2.TeleKlinikDB.model.*;
@@ -13,8 +14,9 @@ public record CreateChat (
         @Getter UUID gpID,
         @Getter UUID patientID
 ) implements ChatCommand {
+
     @Override
-    public void execute(TeleKlinikContext ctx) {
+    public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         // Find GP and Patient
         Optional<GP> gp = ctx.getGpUserRepo().findById(gpID);
 
@@ -34,6 +36,8 @@ public record CreateChat (
         newChat.setPatient(patient.get());
         newChat.setChatState(ChatState.ACTIVE);
 
-        ctx.getChatRepo().save(newChat);
+        Chat chat = ctx.getChatRepo().save(newChat);
+
+        return new TeleKlinikCommandResult(Optional.of(chat.getId()));
     }
 }

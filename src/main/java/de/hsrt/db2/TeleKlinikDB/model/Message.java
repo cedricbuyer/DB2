@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.UUID;
 
 import static jakarta.persistence.CascadeType.REMOVE;
 
@@ -14,7 +15,7 @@ public class Message {
     @Id
     @Getter
     @GeneratedValue
-    private int UUID;
+    private UUID id;
 
     @Getter
     @Setter
