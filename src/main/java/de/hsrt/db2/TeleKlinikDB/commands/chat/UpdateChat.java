@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public record UpdateChat (
         @Getter UUID chatID,
         @Getter ChatState chatState
-) implements ChatCommand {
+) implements TeleKlinikCommand {
     @Override
     public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Chat> chatOptional = ctx.getChatRepo().findById(chatID);

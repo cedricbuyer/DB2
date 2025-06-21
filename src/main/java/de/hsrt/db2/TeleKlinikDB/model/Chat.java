@@ -28,6 +28,5 @@ public class Chat {
 
     @Getter
     @Setter
-    @Embedded
     private ChatState chatState;
 }

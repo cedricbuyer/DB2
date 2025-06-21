@@ -79,6 +79,6 @@ class TeleKlinikDBApplicationTests {
 		if (result.createdObjectID().isEmpty())
 			throw new AssertionError("Created chat ID is empty");
 
-		System.out.println("Created chat: " + result + "of GP: " + gpID + " and pat: " + patID);
+		System.out.println("Created chat: " + result + " of GP: " + gpID + " and pat: " + patID);
 	}
 }

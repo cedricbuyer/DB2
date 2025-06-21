@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.enums.UserType;
@@ -20,7 +21,7 @@ public record CreateUser (
         @Getter UserType userType,
         @Getter @Nullable String profession,
         @Getter @Nullable String insurance
-) implements UserCommand {
+) implements TeleKlinikCommand {
     @Override
     public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         User user = switch (userType) {

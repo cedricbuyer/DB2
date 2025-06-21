@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.chat;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public record DeleteChat (
         @Getter UUID chatID
-) implements ChatCommand {
+) implements TeleKlinikCommand {
     @Override
     public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         // Get Chat to delete

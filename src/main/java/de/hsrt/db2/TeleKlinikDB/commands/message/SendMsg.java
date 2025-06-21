@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Chat;
@@ -19,7 +20,7 @@ public record SendMsg (
         @Getter String text,
         @Getter Blob attachment,
         @Getter UUID senderID
-) implements MsgCommand {
+) implements TeleKlinikCommand {
     public SendMsg {
         // Either msg or attachment may be null
         if ((text == null || text.isEmpty()) && attachment == null) {

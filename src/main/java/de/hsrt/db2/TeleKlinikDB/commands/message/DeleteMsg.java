@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public record DeleteMsg (
         @Getter UUID messageID
-) implements MsgCommand {
+) implements TeleKlinikCommand {
     @Override
     public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<Message> msg = ctx.getMessageRepo().findById(messageID);

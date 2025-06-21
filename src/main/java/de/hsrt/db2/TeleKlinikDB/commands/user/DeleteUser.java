@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.user;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.User;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public record DeleteUser (
         @Getter UUID userID
-) implements UserCommand {
+) implements TeleKlinikCommand {
     @Override
     public TeleKlinikCommandResult execute(TeleKlinikContext ctx) {
         Optional<User> user = ctx.getUserRepo().findById(userID);

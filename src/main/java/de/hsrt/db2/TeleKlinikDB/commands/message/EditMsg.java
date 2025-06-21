@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleKlinikDB.commands.message;
 
+import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommand;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikCommandResult;
 import de.hsrt.db2.TeleKlinikDB.commands.TeleKlinikContext;
 import de.hsrt.db2.TeleKlinikDB.model.Message;
@@ -12,7 +13,7 @@ import java.util.UUID;
 public record EditMsg (
         @Getter UUID messageID,
         @Getter String text
-) implements MsgCommand {
+) implements TeleKlinikCommand {
     public EditMsg {
         if (text == null || text.isEmpty()) {
             throw new IllegalArgumentException("Text cannot be null or empty!");
