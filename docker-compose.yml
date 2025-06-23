@@ -3,8 +3,8 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: tkdb
-      MYSQL_USER: tkdb
+      MYSQL_DATABASE: tcdb
+      MYSQL_USER: tcdb
       MYSQL_PASSWORD: ${DB_PASSWD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
     volumes:
