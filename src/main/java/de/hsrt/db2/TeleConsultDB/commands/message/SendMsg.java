@@ -6,6 +6,7 @@ import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
 import de.hsrt.db2.TeleConsultDB.model.Chat;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import de.hsrt.db2.TeleConsultDB.model.User;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 
 import java.sql.Blob;
@@ -17,9 +18,9 @@ import java.util.UUID;
 
 public record SendMsg (
         @Getter UUID chatID,
-        @Getter String text,
-        @Getter Blob attachment,
-        @Getter UUID senderID
+        @Getter UUID senderID,
+        @Getter @Nullable String text,
+        @Getter @Nullable Blob attachment
 ) implements TeleConsultCommand {
     public SendMsg {
         // Either msg or attachment may be null

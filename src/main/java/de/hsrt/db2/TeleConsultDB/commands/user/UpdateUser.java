@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-public record EditUser (
+public record UpdateUser(
     @Getter UUID userID,
     @Getter String name,
     @Getter String lastname,

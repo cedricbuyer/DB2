@@ -10,7 +10,7 @@ import java.util.UUID;
  * Repository for Chats
  * <p>
  *     IMPORTANT: Method names influence what the respective method does.
- *     e.g.: List<Chat> findChatsByPatient(Patient patient);
+ *     e.g.: <code>List< Chat > findChatsByPatient(Patient patient);</code>
  * </p>
  *
  * @author Frederik Beimgraben
