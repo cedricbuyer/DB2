@@ -11,11 +11,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class TeleConsultContext {
-    @Getter final UserRepo<User>    userRepo;
-    @Getter final UserRepo<GP>      gpUserRepo;
-    @Getter final UserRepo<Patient> patientUserRepo;
-    @Getter final MessageRepo       messageRepo;
-    @Getter final ChatRepo          chatRepo;
-}
+public record TeleConsultContext (
+        @Getter UserRepo<User>    userRepo,
+        @Getter UserRepo<GP>      gpUserRepo,
+        @Getter UserRepo<Patient> patientUserRepo,
+        @Getter MessageRepo       messageRepo,
+        @Getter ChatRepo          chatRepo
+) { }
