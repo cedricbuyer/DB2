@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.user;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.User;
 import lombok.Getter;
 
@@ -15,9 +14,9 @@ public record UpdateUser(
     @Getter String name,
     @Getter String lastname,
     @Getter String gender
-) implements TeleConsultCommand {
+) implements UserCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public User execute(DataBaseContext ctx) {
         Optional<User> userOptional = ctx.getUserRepo().findById(userID);
 
         if (userOptional.isEmpty()) {
@@ -38,8 +37,6 @@ public record UpdateUser(
             user.setGender(gender);
         }
 
-        ctx.getUserRepo().save(user);
-
-        return TeleConsultCommandResult.emptyResult();
+        return ctx.getUserRepo().save(user);
     }
 }

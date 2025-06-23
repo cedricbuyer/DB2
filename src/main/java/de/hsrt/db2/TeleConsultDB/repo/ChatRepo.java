@@ -1,7 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.repo;
 
 import de.hsrt.db2.TeleConsultDB.model.Chat;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
@@ -15,7 +15,7 @@ import java.util.UUID;
  *
  * @author Frederik Beimgraben
  * @see Chat
- * @see TeleConsultContext
+ * @see DataBaseContext
  */
 public interface ChatRepo extends JpaRepository<Chat, UUID> { }
 

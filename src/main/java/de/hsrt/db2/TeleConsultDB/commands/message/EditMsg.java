@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.message;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import lombok.Getter;
 
@@ -13,7 +12,7 @@ import java.util.UUID;
 public record EditMsg (
         @Getter UUID messageID,
         @Getter String text
-) implements TeleConsultCommand {
+) implements MessageCommand {
     public EditMsg {
         if (text == null || text.isEmpty()) {
             throw new IllegalArgumentException("Text cannot be null or empty!");
@@ -21,7 +20,7 @@ public record EditMsg (
     }
 
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public Message execute(DataBaseContext ctx) {
         Optional<Message> msgOptional = ctx.getMessageRepo().findById(messageID);
 
         if (msgOptional.isEmpty()) {
@@ -33,10 +32,8 @@ public record EditMsg (
         }
 
         Message msg = msgOptional.get();
-
         msg.setText(text);
-        ctx.getMessageRepo().save(msg);
 
-        return TeleConsultCommandResult.emptyResult();
+        return ctx.getMessageRepo().save(msg);
     }
 }

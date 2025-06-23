@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.chat;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.Chat;
 import de.hsrt.db2.TeleConsultDB.enums.ChatState;
 import lombok.Getter;
@@ -14,9 +13,9 @@ import java.util.UUID;
 public record UpdateChat (
         @Getter UUID chatID,
         @Getter ChatState chatState
-) implements TeleConsultCommand {
+) implements ChatCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public Chat execute(DataBaseContext ctx) {
         Optional<Chat> chatOptional = ctx.getChatRepo().findById(chatID);
 
         if (chatOptional.isEmpty()) {
@@ -24,11 +23,8 @@ public record UpdateChat (
         }
 
         Chat chat = chatOptional.get();
-
-        // FIXME: Does this work?
         chat.setChatState(chatState);
-        ctx.getChatRepo().save(chat);
 
-        return TeleConsultCommandResult.emptyResult();
+        return ctx.getChatRepo().save(chat);
     }
 }

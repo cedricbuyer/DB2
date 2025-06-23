@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.user;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.User;
 import lombok.Getter;
 
@@ -12,9 +11,9 @@ import java.util.UUID;
 
 public record DeleteUser (
         @Getter UUID userID
-) implements TeleConsultCommand {
+) implements UserCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public User execute(DataBaseContext ctx) {
         Optional<User> user = ctx.getUserRepo().findById(userID);
 
         if (user.isEmpty()) {
@@ -23,6 +22,6 @@ public record DeleteUser (
 
         ctx.getUserRepo().delete(user.get());
 
-        return TeleConsultCommandResult.emptyResult();
+        return null;
     }
 }

@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.service;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,9 @@ public class TeleConsultDBService {
      *      Spring Documentation regarding injection
      * </a> for more.
      */
-    private final TeleConsultContext teleConsultContext;
+    private final DataBaseContext dbContext;
 
-    public TeleConsultCommandResult processTeleConsultCommand(TeleConsultCommand command) {
-        return command.execute(teleConsultContext);
+    public <T> T processCommand(DataBaseCommand<T> command) {
+        return command.execute(dbContext);
     }
 }

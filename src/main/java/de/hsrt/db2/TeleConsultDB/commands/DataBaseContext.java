@@ -7,11 +7,10 @@ import de.hsrt.db2.TeleConsultDB.repo.ChatRepo;
 import de.hsrt.db2.TeleConsultDB.repo.MessageRepo;
 import de.hsrt.db2.TeleConsultDB.repo.UserRepo;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-public record TeleConsultContext (
+public record DataBaseContext(
         @Getter UserRepo<User>    userRepo,
         @Getter UserRepo<GP>      gpUserRepo,
         @Getter UserRepo<Patient> patientUserRepo,

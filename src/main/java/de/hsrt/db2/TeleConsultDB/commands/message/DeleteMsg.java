@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.message;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import lombok.Getter;
 
@@ -12,9 +11,9 @@ import java.util.UUID;
 
 public record DeleteMsg (
         @Getter UUID messageID
-) implements TeleConsultCommand {
+) implements MessageCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public Message execute(DataBaseContext ctx) {
         Optional<Message> msg = ctx.getMessageRepo().findById(messageID);
 
         if (msg.isEmpty()) {
@@ -23,6 +22,6 @@ public record DeleteMsg (
 
         ctx.getMessageRepo().delete(msg.get());
 
-        return TeleConsultCommandResult.emptyResult();
+        return null;
     }
 }

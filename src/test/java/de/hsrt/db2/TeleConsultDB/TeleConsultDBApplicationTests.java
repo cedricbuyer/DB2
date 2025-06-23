@@ -1,10 +1,12 @@
 package de.hsrt.db2.TeleConsultDB;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
+import de.hsrt.db2.TeleConsultDB.commands.chat.ChatCommand;
 import de.hsrt.db2.TeleConsultDB.commands.chat.CreateChat;
 import de.hsrt.db2.TeleConsultDB.commands.user.CreateUser;
+import de.hsrt.db2.TeleConsultDB.commands.user.UserCommand;
 import de.hsrt.db2.TeleConsultDB.enums.UserType;
+import de.hsrt.db2.TeleConsultDB.model.Chat;
+import de.hsrt.db2.TeleConsultDB.model.User;
 import de.hsrt.db2.TeleConsultDB.service.TeleConsultDBService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @SpringBootTest
 class TeleConsultDBApplicationTests {
@@ -21,7 +22,7 @@ class TeleConsultDBApplicationTests {
 
 	@Test
 	void createUserTest() {
-		TeleConsultCommand cmd = new CreateUser(
+		UserCommand cmd = new CreateUser(
 				"Max",
 				"Mustermann",
 				"M",
@@ -31,14 +32,14 @@ class TeleConsultDBApplicationTests {
 				null
 		);
 
-		TeleConsultCommandResult result = consultService.processTeleConsultCommand(cmd);
+		User result = consultService.processCommand(cmd);
 
 		System.out.println(result);
 	}
 
 	@Test
 	void createChatTest() {
-		TeleConsultCommand cmdCreateGP = new CreateUser(
+		UserCommand cmdCreateGP = new CreateUser(
 				"Anja",
 				"Musterfrau",
 				"F",
@@ -48,14 +49,12 @@ class TeleConsultDBApplicationTests {
 				null
 		);
 
-		TeleConsultCommandResult resultCreateGP = consultService.processTeleConsultCommand(cmdCreateGP);
+		User gp = consultService.processCommand(cmdCreateGP);
 
-		if (resultCreateGP.createdObjectID().isEmpty())
-			throw new AssertionError("Created GP ID is empty");
+		if (gp == null)
+			throw new AssertionError("Created GP is null");
 
-		UUID gpID = resultCreateGP.createdObjectID().get();
-
-		TeleConsultCommand cmdCreatePatient = new CreateUser(
+		UserCommand cmdCreatePatient = new CreateUser(
 				"Max",
 				"Mustermann",
 				"M",
@@ -65,20 +64,18 @@ class TeleConsultDBApplicationTests {
 				"AOK"
 		);
 
-		TeleConsultCommandResult resultCreatePatient = consultService.processTeleConsultCommand(cmdCreatePatient);
+		User patient = consultService.processCommand(cmdCreatePatient);
 
-		if (resultCreatePatient.createdObjectID().isEmpty())
-			throw new AssertionError("Created patient ID is empty");
+		if (patient == null)
+			throw new AssertionError("Created patient is null");
 
-		UUID patID = resultCreatePatient.createdObjectID().get();
+		ChatCommand cmd = new CreateChat(gp.getId(), patient.getId());
 
-		TeleConsultCommand cmd = new CreateChat(gpID, patID);
+		Chat result = consultService.processCommand(cmd);
 
-		TeleConsultCommandResult result = consultService.processTeleConsultCommand(cmd);
+		if (result == null)
+			throw new AssertionError("Created chat is null");
 
-		if (result.createdObjectID().isEmpty())
-			throw new AssertionError("Created chat ID is empty");
-
-		System.out.println("Created chat: " + result + " of GP: " + gpID + " and pat: " + patID);
+		System.out.println("Created chat: " + result + " of GP: " + gp.getId() + " and pat: " + patient.getId());
 	}
 }

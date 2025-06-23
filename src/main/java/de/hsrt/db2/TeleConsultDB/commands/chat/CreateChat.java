@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.chat;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.commands.user.UserCommand;
 import de.hsrt.db2.TeleConsultDB.enums.ChatState;
 import de.hsrt.db2.TeleConsultDB.model.*;
 import lombok.Getter;
@@ -14,9 +13,9 @@ import java.util.UUID;
 public record CreateChat (
         @Getter UUID gpID,
         @Getter UUID patientID
-) implements TeleConsultCommand {
+) implements ChatCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public Chat execute(DataBaseContext ctx) {
         // Find GP and Patient
         Optional<GP> gp = ctx.getGpUserRepo().findById(gpID);
 
@@ -36,8 +35,6 @@ public record CreateChat (
         newChat.setPatient(patient.get());
         newChat.setChatState(ChatState.ACTIVE);
 
-        Chat chat = ctx.getChatRepo().save(newChat);
-
-        return new TeleConsultCommandResult(Optional.of(chat.getId()));
+        return ctx.getChatRepo().save(newChat);
     }
 }

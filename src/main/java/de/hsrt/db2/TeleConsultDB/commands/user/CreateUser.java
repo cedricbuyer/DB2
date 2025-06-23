@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.user;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.enums.UserType;
 import de.hsrt.db2.TeleConsultDB.model.GP;
 import de.hsrt.db2.TeleConsultDB.model.Patient;
@@ -21,9 +20,9 @@ public record CreateUser (
         @Getter UserType userType,
         @Getter @Nullable String profession,
         @Getter @Nullable String insurance
-) implements TeleConsultCommand {
+) implements UserCommand {
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public User execute(DataBaseContext ctx) {
         User user = switch (userType) {
             case GP -> new GP();
             case PATIENT -> new Patient();
@@ -34,7 +33,6 @@ public record CreateUser (
         user.setGender(gender);
         user.setBirthdate(birthdate);
 
-
         return switch (userType) {
             case GP -> {
                 if (profession == null || profession.isEmpty()) {
@@ -43,9 +41,7 @@ public record CreateUser (
 
                 ((GP) user).setProfession(profession);
 
-                yield new TeleConsultCommandResult(
-                        Optional.of(ctx.getGpUserRepo().save((GP) user).getId())
-                );
+                yield ctx.gpUserRepo().save((GP) user);
             }
             case PATIENT -> {
                 if (insurance == null || insurance.isEmpty()) {
@@ -54,9 +50,7 @@ public record CreateUser (
 
                 ((Patient) user).setInsurance(insurance);
 
-                yield new TeleConsultCommandResult(
-                        Optional.of(ctx.getPatientUserRepo().save((Patient) user).getId())
-                );
+                yield ctx.patientUserRepo().save((Patient) user);
             }
         };
     }

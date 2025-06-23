@@ -1,8 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.message;
 
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommand;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultCommandResult;
-import de.hsrt.db2.TeleConsultDB.commands.TeleConsultContext;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
+import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.Chat;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import de.hsrt.db2.TeleConsultDB.model.User;
@@ -21,7 +20,7 @@ public record SendMsg (
         @Getter UUID senderID,
         @Getter @Nullable String text,
         @Getter @Nullable Blob attachment
-) implements TeleConsultCommand {
+) implements MessageCommand {
     public SendMsg {
         // Either msg or attachment may be null
         if ((text == null || text.isEmpty()) && attachment == null) {
@@ -30,7 +29,7 @@ public record SendMsg (
     }
 
     @Override
-    public TeleConsultCommandResult execute(TeleConsultContext ctx) {
+    public Message execute(DataBaseContext ctx) {
         Optional<Chat> chat = ctx.getChatRepo().findById(chatID);
         if (chat.isEmpty()) {
             throw new NoSuchElementException("Chat with ID " + chatID + " not found!");
@@ -54,6 +53,6 @@ public record SendMsg (
         msg.setAttachment(attachment);
         msg.setDate((Date) Date.from(Instant.now()));
 
-        return new TeleConsultCommandResult(Optional.of(ctx.getMessageRepo().save(msg).getId()));
+        return ctx.getMessageRepo().save(msg);
     }
 }
