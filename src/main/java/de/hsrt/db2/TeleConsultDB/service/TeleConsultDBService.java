@@ -24,12 +24,11 @@ public class TeleConsultDBService {
         return command.execute(teleConsultContext);
     }
 
-    /*
-    Filter all chats in the database using the provided filter
-     */
+
+    // Filter all chats in the database using the provided filter
     @param
     @return
-    public java.util.List< Chat > filterChats(ChatFilter filter) {
+    public java.util.List< Chat > filterChats(de.hsrt.db2.TeleConsultDB.service.filters.ChatFilter filter) {
         return teleConsultContext.getChatRepo()
                 .findAll()
                 .stream()
@@ -37,13 +36,11 @@ public class TeleConsultDBService {
                 .toList();
     }
 
-    /*
-    Filter all messages in the database using the provided filter
-     */
-     */
+    // Filter all messages in the database using the provided filter
+
     @param
     @return
-    public java.util.List< Chat.Message > filterMessages(MessageFilter filter) {
+    public java.util.List< Chat.Message > filterMessages(de.hsrt.db2.TeleConsultDB.service.filters.MessageFilter filter) {
         return teleConsultContext.getMessageRepo()
                 .findAll()
                 .stream()
