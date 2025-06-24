@@ -1,7 +1,6 @@
 package de.hsrt.db2.TeleConsultDB.commands.user;
 
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.repo.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.model.User;
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.service;
 
 import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.repo.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.enums.ChatState;
 import de.hsrt.db2.TeleConsultDB.enums.MessageState;
 import de.hsrt.db2.TeleConsultDB.model.Chat;

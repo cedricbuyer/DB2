@@ -1,7 +1,6 @@
 package de.hsrt.db2.TeleConsultDB.commands.user;
 
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.repo.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.enums.UserType;
 import de.hsrt.db2.TeleConsultDB.model.GP;
 import de.hsrt.db2.TeleConsultDB.model.Patient;
@@ -10,7 +9,6 @@ import jakarta.annotation.Nullable;
 import lombok.Getter;
 
 import java.sql.Date;
-import java.util.Optional;
 
 public record CreateUser (
         @Getter String name,

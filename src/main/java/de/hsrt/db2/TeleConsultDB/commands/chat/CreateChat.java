@@ -1,7 +1,6 @@
 package de.hsrt.db2.TeleConsultDB.commands.chat;
 
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
-import de.hsrt.db2.TeleConsultDB.commands.user.UserCommand;
+import de.hsrt.db2.TeleConsultDB.repo.DataBaseContext;
 import de.hsrt.db2.TeleConsultDB.enums.ChatState;
 import de.hsrt.db2.TeleConsultDB.model.*;
 import lombok.Getter;
