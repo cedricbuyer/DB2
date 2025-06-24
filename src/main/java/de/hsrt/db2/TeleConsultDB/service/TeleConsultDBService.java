@@ -40,9 +40,12 @@ public class TeleConsultDBService {
         List<Message> messages = new ArrayList<>();
 
         for (Chat chat : userChats) {
-            List<Message> chatMessages = dbContext.getMessageRepo().findByChatAndState(
+            User chatPartner = user.getId().equals(chat.getGp().getId()) ? chat.getPatient() : chat.getGp();
+
+            List<Message> chatMessages = dbContext.getMessageRepo().findByChatAndStateAndSender(
                     chat,
-                    MessageState.UNREAD
+                    MessageState.UNREAD,
+                    chatPartner
             );
 
             messages.addAll(chatMessages);
