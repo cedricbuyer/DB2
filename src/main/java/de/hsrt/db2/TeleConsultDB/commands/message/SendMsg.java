@@ -2,6 +2,7 @@ package de.hsrt.db2.TeleConsultDB.commands.message;
 
 import de.hsrt.db2.TeleConsultDB.commands.DataBaseCommand;
 import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.enums.MessageState;
 import de.hsrt.db2.TeleConsultDB.model.Chat;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import de.hsrt.db2.TeleConsultDB.model.User;
@@ -57,6 +58,7 @@ public record SendMsg (
         msg.setChat(chat.get());
         msg.setAttachment(attachment);
         msg.setDate(new Date(Instant.now().toEpochMilli()));
+        msg.setState(MessageState.UNREAD);
 
         return ctx.getMessageRepo().save(msg);
     }

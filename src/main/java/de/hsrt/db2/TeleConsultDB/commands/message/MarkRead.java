@@ -1,6 +1,7 @@
 package de.hsrt.db2.TeleConsultDB.commands.message;
 
 import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.enums.MessageState;
 import de.hsrt.db2.TeleConsultDB.model.Message;
 import lombok.Getter;
 
@@ -8,16 +9,9 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
-public record EditMsg (
-        @Getter UUID messageID,
-        @Getter String text
+public record MarkRead (
+        @Getter UUID messageID
 ) implements MessageCommand {
-    public EditMsg {
-        if (text == null || text.isEmpty()) {
-            throw new IllegalArgumentException("Text cannot be null or empty!");
-        }
-    }
-
     @Override
     public Message execute(DataBaseContext ctx) {
         Optional<Message> msgOptional = ctx.getMessageRepo().findById(messageID);
@@ -26,12 +20,8 @@ public record EditMsg (
             throw new NoSuchElementException("Message with ID " + messageID + " not found!");
         }
 
-        if (text == null || text.isEmpty()) {
-            throw new IllegalArgumentException("Text cannot be null or empty!");
-        }
-
         Message msg = msgOptional.get();
-        msg.setText(text);
+        msg.setState(MessageState.READ);
 
         return ctx.getMessageRepo().save(msg);
     }

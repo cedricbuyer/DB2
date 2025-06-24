@@ -2,6 +2,7 @@ package de.hsrt.db2.TeleConsultDB;
 
 import de.hsrt.db2.TeleConsultDB.commands.chat.ChatCommand;
 import de.hsrt.db2.TeleConsultDB.commands.chat.CreateChat;
+import de.hsrt.db2.TeleConsultDB.commands.message.MarkRead;
 import de.hsrt.db2.TeleConsultDB.commands.message.SendMsg;
 import de.hsrt.db2.TeleConsultDB.commands.user.CreateUser;
 import de.hsrt.db2.TeleConsultDB.commands.user.UserCommand;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 class TeleConsultDBApplicationTests {
@@ -109,5 +111,43 @@ class TeleConsultDBApplicationTests {
 
 		if (gp.getId() == msg.getSender().getId())
 			System.out.println("Correct Sender");
+	}
+
+	@Test
+	void getUnreadMessagesTest() {
+		// Create Chat and Users
+		User gp = consultService.processCommand(new CreateUser(
+				"Max", "Mustermann", "M",
+				Date.valueOf(LocalDate.of(1998, 2, 12)),
+				UserType.GP, "General Practitioner", null));
+
+		User patient = consultService.processCommand(new CreateUser(
+				"Anja", "Musterfrau", "F",
+				Date.valueOf(LocalDate.of(1995, 1, 1)),
+				UserType.PATIENT, null, "AOK"));
+
+		String messageTest = "Hallo!";
+
+		Chat chat = consultService.processCommand(new CreateChat(gp.getId(), patient.getId()));
+
+		// Send Message
+		Message msg = consultService.processCommand(new SendMsg(chat.getId(), gp.getId(), messageTest, null));
+
+		System.out.println(msg.getId());
+
+		// Get Unread Messages for Patient
+		List<Message> unreadMessages = consultService.getUnreadMessages(patient);
+
+		if (unreadMessages.stream().noneMatch(unread -> unread.getId().equals(msg.getId()))) {
+			throw new AssertionError("Unread message not found");
+		}
+
+		// Mark Message read
+		consultService.processCommand(new MarkRead(msg.getId()));
+		unreadMessages = consultService.getUnreadMessages(patient);
+
+		if (!unreadMessages.isEmpty()) {
+			throw new AssertionError("Message not marked as read");
+		}
 	}
 }
