@@ -78,4 +78,37 @@ class TeleConsultDBApplicationTests {
 
 		System.out.println("Created chat: " + result + " of GP: " + gp.getId() + " and pat: " + patient.getId());
 	}
+	@test
+	void sendMsgTest (){
+      	//Nutzer und Chat erstellen
+		User gp = consultService.processCommand(new CreateUser(
+				"Max", "Mustermann", "M",
+				Date.valueOf(LocalDate.of(1998, 2, 12)),
+				UserType.GP, "General Practitioner", null));
+
+		User patient = consultService.processCommand(new CreateUser(
+				"Anja", "Musterfrau", "F",
+				Date.valueOf(LocalDate.of(1995, 1, 1)),
+				UserType.PATIENT, null, null));
+
+		string messageTest = "Hallo!";
+
+		Chat chat = consultService.processCommand(new CreateChat(gp.getUserID(), patient.getUserID()));
+
+		//Nachricht senden
+		Message msg = consultService.processCommand(new SendMsg(chat.getChatID(), gp.getUserID(), messageTest, null));
+
+		//Prüfung
+
+		if (msg == null)
+			throw new AssertionError("Sent message is null");
+
+		if (msg != null)
+			System.out.println("" + messageTest);
+
+		if (gp.getUserID() == msg.getSender().getUserID())
+			System.out.println("Correct Sender");
+
+
+	}
 }
