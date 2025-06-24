@@ -40,9 +40,14 @@ public record SendMsg (
             throw new NoSuchElementException("Sender with ID " + senderID + " not found!");
         }
 
+        UUID gpID = chat.get().getGp().getId();
+        UUID patientID = chat.get().getPatient().getId();
+
         // Assert, the User is part of the Chat
-        if (!(chat.get().getGp().equals(sender.get()) || chat.get().getPatient().equals(sender.get()))) {
-            throw new IllegalArgumentException("Sender is not in chat with ID " + chatID);
+        if (!gpID.equals(senderID) && !patientID.equals(senderID)) {
+            throw new IllegalArgumentException(
+                    "Sender is not in chat with ID " + chatID + " – gp: " + gpID + " ; patient: " + patientID + " ; sender: " + senderID
+            );
         }
 
         // Create Message Object
@@ -51,7 +56,7 @@ public record SendMsg (
         msg.setSender(sender.get());
         msg.setChat(chat.get());
         msg.setAttachment(attachment);
-        msg.setDate((Date) Date.from(Instant.now()));
+        msg.setDate(new Date(Instant.now().toEpochMilli()));
 
         return ctx.getMessageRepo().save(msg);
     }

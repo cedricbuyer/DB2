@@ -2,10 +2,12 @@ package de.hsrt.db2.TeleConsultDB;
 
 import de.hsrt.db2.TeleConsultDB.commands.chat.ChatCommand;
 import de.hsrt.db2.TeleConsultDB.commands.chat.CreateChat;
+import de.hsrt.db2.TeleConsultDB.commands.message.SendMsg;
 import de.hsrt.db2.TeleConsultDB.commands.user.CreateUser;
 import de.hsrt.db2.TeleConsultDB.commands.user.UserCommand;
 import de.hsrt.db2.TeleConsultDB.enums.UserType;
 import de.hsrt.db2.TeleConsultDB.model.Chat;
+import de.hsrt.db2.TeleConsultDB.model.Message;
 import de.hsrt.db2.TeleConsultDB.model.User;
 import de.hsrt.db2.TeleConsultDB.service.TeleConsultDBService;
 import org.junit.jupiter.api.Test;
@@ -78,9 +80,10 @@ class TeleConsultDBApplicationTests {
 
 		System.out.println("Created chat: " + result + " of GP: " + gp.getId() + " and pat: " + patient.getId());
 	}
-	@test
+
+	@Test
 	void sendMsgTest (){
-      	//Nutzer und Chat erstellen
+      	// Create Chat and Users
 		User gp = consultService.processCommand(new CreateUser(
 				"Max", "Mustermann", "M",
 				Date.valueOf(LocalDate.of(1998, 2, 12)),
@@ -89,26 +92,22 @@ class TeleConsultDBApplicationTests {
 		User patient = consultService.processCommand(new CreateUser(
 				"Anja", "Musterfrau", "F",
 				Date.valueOf(LocalDate.of(1995, 1, 1)),
-				UserType.PATIENT, null, null));
+				UserType.PATIENT, null, "AOK"));
 
-		string messageTest = "Hallo!";
+		String messageTest = "Hallo!";
 
-		Chat chat = consultService.processCommand(new CreateChat(gp.getUserID(), patient.getUserID()));
+		Chat chat = consultService.processCommand(new CreateChat(gp.getId(), patient.getId()));
 
-		//Nachricht senden
-		Message msg = consultService.processCommand(new SendMsg(chat.getChatID(), gp.getUserID(), messageTest, null));
+		// Send Message
+		Message msg = consultService.processCommand(new SendMsg(chat.getId(), gp.getId(), messageTest, null));
 
-		//Prüfung
-
+		// Check the Resulting State
 		if (msg == null)
 			throw new AssertionError("Sent message is null");
 
-		if (msg != null)
-			System.out.println("" + messageTest);
+		System.out.println(messageTest);
 
-		if (gp.getUserID() == msg.getSender().getUserID())
+		if (gp.getId() == msg.getSender().getId())
 			System.out.println("Correct Sender");
-
-
 	}
 }
