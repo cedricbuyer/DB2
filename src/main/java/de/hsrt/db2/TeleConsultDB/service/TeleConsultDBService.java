@@ -50,4 +50,20 @@ public class TeleConsultDBService {
 
         return messages;
     }
+
+    public List<Chat> getActiveChatsForUser(User user) {
+        return dbContext.getChatRepo().findByChatStateAndPatientIdOrGpId(
+                ChatState.ACTIVE,
+                user.getId(),
+                user.getId()
+        );
+    }
+
+    public List<Chat> getArchivedChatsForUser(User user) {
+        return dbContext.getChatRepo().findByChatStateAndPatientIdOrGpId(
+                ChatState.ARCHIVED,
+                user.getId(),
+                user.getId()
+        );
+    }
 }
