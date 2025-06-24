@@ -1,8 +1,11 @@
 package de.hsrt.db2.TeleConsultDB.repo;
 
-import de.hsrt.db2.TeleConsultDB.commands.DataBaseContext;
+import de.hsrt.db2.TeleConsultDB.enums.MessageState;
+import de.hsrt.db2.TeleConsultDB.model.Chat;
 import de.hsrt.db2.TeleConsultDB.model.Message;
+import de.hsrt.db2.TeleConsultDB.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
 
 import java.util.UUID;
 
@@ -14,8 +17,11 @@ import java.util.UUID;
  *
  * @author Frederik Beimgraben
  * @see Message
- * @see DataBaseContext
  */
-public interface MessageRepo extends JpaRepository<Message, UUID> { }
+public interface MessageRepo extends JpaRepository<Message, UUID> {
+    List<Message> findByChat(Chat chat);
+    List<Message> findByChatAndSender(Chat chat, User sender);
+    List<Message> findByChatAndState(Chat chat, MessageState state);
+}
 
 

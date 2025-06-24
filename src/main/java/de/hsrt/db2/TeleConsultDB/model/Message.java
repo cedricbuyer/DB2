@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleConsultDB.model;
 
+import de.hsrt.db2.TeleConsultDB.enums.MessageState;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,4 +52,8 @@ public class Message {
     @Setter
     @Lob
     private Blob attachment;
+
+    @Getter
+    @Setter
+    private MessageState state;
 }
