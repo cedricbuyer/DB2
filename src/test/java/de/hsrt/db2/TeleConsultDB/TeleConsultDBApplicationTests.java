@@ -1,5 +1,7 @@
 package de.hsrt.db2.TeleConsultDB;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 import de.hsrt.db2.TeleConsultDB.commands.chat.ChatCommand;
 import de.hsrt.db2.TeleConsultDB.commands.chat.CreateChat;
 import de.hsrt.db2.TeleConsultDB.commands.message.MarkRead;
@@ -15,7 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.sql.Blob;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -148,6 +153,49 @@ class TeleConsultDBApplicationTests {
 
 		if (!unreadMessages.isEmpty()) {
 			throw new AssertionError("Message not marked as read");
+		}
+	}
+
+	// Test to check if blob is working
+	@Test
+	void blobTest() {
+		User gp = consultService.processCommand(new CreateUser(
+				"Anja",
+				"Anjason",
+				"F",
+				Date.valueOf(LocalDate.of(1990, 4, 13)),
+				UserType.GP,
+				"TestProfession",
+				"TestInsurance"
+		));
+		User patient = consultService.processCommand(new CreateUser(
+				"Max",
+				"Maxson",
+				"M",
+				Date.valueOf(LocalDate.of(1985, 7, 3)),
+				UserType.PATIENT,
+				null,
+				null
+		));
+
+		byte[] data = "test data".getBytes();
+		Blob newBlobAttachment;
+		try {
+			newBlobAttachment = new SerialBlob(data);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		Chat chat = consultService.processCommand(new CreateChat(gp.getId(), patient.getId()));
+
+		Message msg = consultService.processCommand(new SendMsg(chat.getId(), gp.getId(), null, newBlobAttachment));
+
+		if (msg == null || msg.getAttachment() == null) {
+			throw new AssertionError("Blob attachment is null or message is null");
+		}
+
+		if (msg.getText() != null) {
+			throw new AssertionError("Text should be null");
 		}
 	}
 }
