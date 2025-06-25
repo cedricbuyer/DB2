@@ -204,4 +204,38 @@ class TeleConsultDBApplicationTests {
 			throw new AssertionError("Text should be null");
 		}
 	}
+
+	@Test
+	void invalidCharTest() {
+		User gp = consultService.processCommand(new CreateUser(
+				"Anja",
+				"Anjason",
+				"F",
+				Date.valueOf(LocalDate.of(1990, 4, 13)),
+				UserType.GP,
+				"TestProfession",
+				null
+		));
+
+		User patient = consultService.processCommand(new CreateUser(
+				"Max",
+				"Maxson",
+				"M",
+				Date.valueOf(LocalDate.of(1985, 7, 3)),
+				UserType.PATIENT,
+				null,
+				"Test Insurance"
+		));
+
+		Chat chat = consultService.processCommand(new CreateChat(gp.getId(), patient.getId()));
+
+		try {
+			Message msg = consultService.processCommand(new SendMsg(chat.getId(), gp.getId(), "Test msg with invalid char: \u0000 炎", null));
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println("Illegal chars are not allowed: " + e.getMessage());
+			return; // Test passes if exception is thrown
+		}
+	}
+}
 }
