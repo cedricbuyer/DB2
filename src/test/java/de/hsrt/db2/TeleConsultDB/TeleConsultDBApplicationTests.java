@@ -23,6 +23,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 @SpringBootTest
 class TeleConsultDBApplicationTests {
@@ -166,8 +167,9 @@ class TeleConsultDBApplicationTests {
 				Date.valueOf(LocalDate.of(1990, 4, 13)),
 				UserType.GP,
 				"TestProfession",
-				"TestInsurance"
+				null
 		));
+
 		User patient = consultService.processCommand(new CreateUser(
 				"Max",
 				"Maxson",
@@ -175,11 +177,15 @@ class TeleConsultDBApplicationTests {
 				Date.valueOf(LocalDate.of(1985, 7, 3)),
 				UserType.PATIENT,
 				null,
-				null
+				"TestInsurance"
 		));
 
-		byte[] data = "test data".getBytes();
+		byte[] data = new byte[(int) 5e5];
+
+		new Random().nextBytes(data);
+
 		Blob newBlobAttachment;
+
 		try {
 			newBlobAttachment = new SerialBlob(data);
 		} catch (SQLException e) {
