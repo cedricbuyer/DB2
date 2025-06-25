@@ -20,5 +20,5 @@ import java.util.UUID;
  * @see Patient
  */
 public interface UserRepo<T extends User> extends JpaRepository<T, UUID> {
-    List<T> findByNameOrLastname(String name, String lastname);
+    List<T> findByNameContainsOrLastnameContains(String name, String lastname);
 }

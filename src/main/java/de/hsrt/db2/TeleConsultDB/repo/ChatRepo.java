@@ -18,7 +18,8 @@ import java.util.UUID;
  * @see Chat
  */
 public interface ChatRepo extends JpaRepository<Chat, UUID> {
-    List<Chat> findByChatStateAndPatientIdOrGpId(ChatState chatState, UUID patientId, UUID gpId);
+    List<Chat> findByChatStateAndPatientId(ChatState chatState, UUID patientId);
+    List<Chat> findByChatStateAndGpId(ChatState chatState, UUID gpId);
 }
 
 

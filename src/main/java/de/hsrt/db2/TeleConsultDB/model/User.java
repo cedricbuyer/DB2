@@ -1,5 +1,6 @@
 package de.hsrt.db2.TeleConsultDB.model;
 
+import de.hsrt.db2.TeleConsultDB.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -45,4 +46,14 @@ public class User {
     @Getter
     @Setter
     private Date birthdate;
+
+    public UserType getUserType() {
+        if (this instanceof GP) {
+            return UserType.GP;
+        } else if (this instanceof Patient) {
+            return UserType.PATIENT;
+        } else {
+            throw new IllegalArgumentException("Unknown user type");
+        }
+    }
 }

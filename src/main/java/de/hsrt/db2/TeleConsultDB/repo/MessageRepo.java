@@ -20,7 +20,6 @@ import java.util.UUID;
  */
 public interface MessageRepo extends JpaRepository<Message, UUID> {
     List<Message> findByChat(Chat chat);
-    List<Message> findByChatAndSender(Chat chat, User sender);
     List<Message> findByChatAndStateAndSender(Chat chat, MessageState state, User sender);
 }
 
