@@ -24,8 +24,12 @@ public record SendMsg (
 ) implements MessageCommand {
     public SendMsg {
         // Either msg or attachment may be null
-        if ((text == null || text.isEmpty()) && attachment == null || checkContainsIllegalChar(text)) {
+        if ((text == null || text.isEmpty()) && attachment == null) {
             throw new IllegalArgumentException("either msg or attachment must be set");
+        }
+
+        if (text != null && checkContainsIllegalChar(text)) {
+            throw new IllegalArgumentException("text contains illegal characters");
         }
     }
 
