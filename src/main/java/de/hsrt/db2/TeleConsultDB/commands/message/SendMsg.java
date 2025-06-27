@@ -8,6 +8,9 @@ import de.hsrt.db2.TeleConsultDB.model.User;
 import jakarta.annotation.Nullable;
 import lombok.Getter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.sql.Blob;
 import java.sql.Date;
 import java.time.Instant;
@@ -23,7 +26,7 @@ public record SendMsg (
 ) implements MessageCommand {
     public SendMsg {
         // Either msg or attachment may be null
-        if ((text == null || text.isEmpty()) && attachment == null) {
+        if ((text == null || text.isEmpty()) && attachment == null || checkContainsIllegalChar(text)) {
             throw new IllegalArgumentException("either msg or attachment must be set");
         }
     }
@@ -60,5 +63,12 @@ public record SendMsg (
         msg.setState(MessageState.UNREAD);
 
         return ctx.getMessageRepo().save(msg);
+    }
+
+    public boolean checkContainsIllegalChar(String text) {
+        String illegalCharsPattern = "[^a-zA-Z0-9\\s.,!?;:()\\-]";
+        Pattern pattern = Pattern.compile(illegalCharsPattern);
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
     }
 }
