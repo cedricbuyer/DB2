@@ -39,3 +39,4 @@ src/main/resources/hibernate.properties
 .env
 
 data/
+.data/
