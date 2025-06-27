@@ -8,6 +8,6 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
     volumes:
-      - ./data:/var/lib/mysql
+      - ./.data:/var/lib/mysql
     ports:
       - 127.0.0.1:${DB_PORT}:3306
