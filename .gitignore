@@ -40,3 +40,5 @@ src/main/resources/hibernate.properties
 
 data/
 .data/
+lib/*.jar
+*.jar

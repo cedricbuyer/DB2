@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public record SendMsg (
         @Getter UUID chatID,
@@ -22,7 +24,7 @@ public record SendMsg (
 ) implements MessageCommand {
     public SendMsg {
         // Either msg or attachment may be null
-        if ((text == null || text.isEmpty()) && attachment == null) {
+        if ((text == null || text.isEmpty()) && attachment == null || checkContainsIllegalChar(text)) {
             throw new IllegalArgumentException("either msg or attachment must be set");
         }
     }
@@ -59,5 +61,12 @@ public record SendMsg (
         msg.setState(MessageState.UNREAD);
 
         return ctx.getMessageRepo().save(msg);
+    }
+
+    public boolean checkContainsIllegalChar(String text) {
+        String illegalCharsPattern = "[^a-zA-Z0-9\\s.,!?;:()\\-]";
+        Pattern pattern = Pattern.compile(illegalCharsPattern);
+        Matcher matcher = pattern.matcher(text);
+        return matcher.find();
     }
 }
