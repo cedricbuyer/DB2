@@ -265,7 +265,7 @@ class TeleConsultDBApplicationTests {
 
 		System.out.println(chats);
 
-		if (chats.size() != 0) {
+		if (!chats.isEmpty()) {
 			throw new AssertionError("Chat should not exist");
 		}
 	}
