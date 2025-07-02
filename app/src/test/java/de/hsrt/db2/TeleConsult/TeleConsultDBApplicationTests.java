@@ -6,6 +6,7 @@ import de.hsrt.db2.TeleConsult.command.chat.CreateChat;
 import de.hsrt.db2.TeleConsult.command.message.MarkRead;
 import de.hsrt.db2.TeleConsult.command.message.SendMsg;
 import de.hsrt.db2.TeleConsult.command.user.CreateUser;
+import de.hsrt.db2.TeleConsult.command.user.DeleteUser;
 import de.hsrt.db2.TeleConsult.enums.UserType;
 import de.hsrt.db2.TeleConsult.model.Chat;
 import de.hsrt.db2.TeleConsult.model.Message;
@@ -228,5 +229,44 @@ class TeleConsultDBApplicationTests {
 		}
 
 		throw new AssertionError("Exception not thrown for invalid char!");
+	}
+
+	@Test
+	void testDeleteGp() {
+		User gp = consultService.processUserCommand(new CreateUser(
+				"Anja",
+				"Anjason",
+				"F",
+				Date.valueOf(LocalDate.of(1990, 4, 13)),
+				UserType.GP,
+				"TestProfession",
+				null
+		));
+
+		User patient = consultService.processUserCommand(new CreateUser(
+				"Max",
+				"Maxson",
+				"M",
+				Date.valueOf(LocalDate.of(1985, 7, 3)),
+				UserType.PATIENT,
+				null,
+				"Test Insurance"
+		));
+
+		Chat chat = consultService.processChatCommand(new CreateChat(gp.getId(), patient.getId()));
+
+		// Delete Chat
+		consultService.processUserCommand(
+				new DeleteUser(gp.getId())
+		);
+
+		// Get Chat (should not exist)
+		List<Chat> chats = consultService.getChatsForUser(patient, null);
+
+		System.out.println(chats);
+
+		if (chats.size() != 0) {
+			throw new AssertionError("Chat should not exist");
+		}
 	}
 }

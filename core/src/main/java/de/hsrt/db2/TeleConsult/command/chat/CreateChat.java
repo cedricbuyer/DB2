@@ -17,23 +17,26 @@ public record CreateChat (
     @Override
     public Chat execute(RepoContext ctx) {
         // Find GP and Patient
-        Optional<GP> gp = ctx.getGpUserRepo().findById(gpID);
+        Optional<GP> gpOptional = ctx.getGpUserRepo().findById(gpID);
 
-        if (gp.isEmpty()) {
+        if (gpOptional.isEmpty()) {
             throw new NoSuchElementException("Specified GP does not exist");
         }
 
-        Optional<Patient> patient = ctx.getPatientUserRepo().findById(patientID);
+        Optional<Patient> patientOptional = ctx.getPatientUserRepo().findById(patientID);
 
-        if (patient.isEmpty()) {
+        if (patientOptional.isEmpty()) {
             throw new NoSuchElementException("Specified Patient does not exist");
         }
 
+        GP gp = gpOptional.get();
+        Patient patient = patientOptional.get();
+
         // Create new Chat Object
         Chat newChat = new Chat();
-        newChat.setGp(gp.get());
-        newChat.setPatient(patient.get());
         newChat.setChatState(ChatState.ACTIVE);
+        newChat.setGp(gp);
+        newChat.setPatient(patient);
 
         return ctx.getChatRepo().save(newChat);
     }

@@ -28,12 +28,14 @@ public class Chat {
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = REMOVE)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "gp_id", nullable = false)
     private GP gp;
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = REMOVE)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
     @Getter

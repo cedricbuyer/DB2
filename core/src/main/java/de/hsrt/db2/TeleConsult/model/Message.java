@@ -30,12 +30,12 @@ public class Message {
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = REMOVE)
+    @ManyToOne(optional = false)
     private User sender;
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = REMOVE)
+    @ManyToOne(optional = false)
     private Chat chat;
 
     @Getter

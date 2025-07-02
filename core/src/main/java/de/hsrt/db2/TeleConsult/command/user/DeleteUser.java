@@ -1,5 +1,8 @@
 package de.hsrt.db2.TeleConsult.command.user;
 
+import de.hsrt.db2.TeleConsult.enums.UserType;
+import de.hsrt.db2.TeleConsult.model.GP;
+import de.hsrt.db2.TeleConsult.model.Patient;
 import de.hsrt.db2.TeleConsult.repo.RepoContext;
 import de.hsrt.db2.TeleConsult.model.User;
 import lombok.Getter;
@@ -13,13 +16,18 @@ public record DeleteUser (
 ) implements UserCommand {
     @Override
     public User execute(RepoContext ctx) {
-        Optional<User> user = ctx.getUserRepo().findById(userID);
+        Optional<User> userOptional = ctx.getUserRepo().findById(userID);
 
-        if (user.isEmpty()) {
+        if (userOptional.isEmpty()) {
             throw new NoSuchElementException("User with ID " + userID + " not found!");
         }
 
-        ctx.getUserRepo().delete(user.get());
+        User user = userOptional.get();
+
+        switch (user.getUserType()) {
+            case GP -> ctx.getGpUserRepo().delete((GP)user);
+            case PATIENT -> ctx.getPatientUserRepo().delete((Patient)user);
+        }
 
         return null;
     }
